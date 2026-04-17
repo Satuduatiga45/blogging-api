@@ -1,11 +1,8 @@
 package com.satuduatiga.api.service.impl;
 
-import static com.satuduatiga.api.mapper.BlogMapper.mapToBlogResponse;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,18 +10,17 @@ import com.satuduatiga.api.dto.BlogRequest;
 import com.satuduatiga.api.dto.BlogResponse;
 import com.satuduatiga.api.entity.Blog;
 import com.satuduatiga.api.exception.BlogNotFoundException;
+import static com.satuduatiga.api.mapper.BlogMapper.mapToBlogResponse;
 import com.satuduatiga.api.repository.BlogRepository;
 import com.satuduatiga.api.service.BlogService;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BlogServiceImpl implements BlogService {
 
     private final BlogRepository blogRepository;
-
-    @Autowired
-    public BlogServiceImpl(BlogRepository blogRepository) {
-        this.blogRepository = blogRepository;
-    }
 
     @Override
     @Transactional(readOnly = true)

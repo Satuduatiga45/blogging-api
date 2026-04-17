@@ -1,8 +1,8 @@
 package com.satuduatiga.api.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -43,7 +43,7 @@ public class Blog {
     @CollectionTable(name = "blog_tags", joinColumns = @JoinColumn(name = "blog_id"))
     @Column(name = "tag")
     @Builder.Default
-    private List<String> tags = new ArrayList<>();
+    private Set<String> tags = new HashSet<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;

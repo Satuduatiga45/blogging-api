@@ -1,7 +1,7 @@
 package com.satuduatiga.api.dto;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +20,7 @@ public class BlogResponse {
     private String title;
     private String content;
     private String category;
-    private List<String> tags;
+    private Set<String> tags;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

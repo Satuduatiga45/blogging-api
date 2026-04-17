@@ -2,7 +2,6 @@ package com.satuduatiga.api.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,17 +20,14 @@ import com.satuduatiga.api.dto.BlogResponse;
 import com.satuduatiga.api.service.BlogService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/blog")
+@RequiredArgsConstructor
 public class BlogController {
 
     private final BlogService blogService;
-
-    @Autowired
-    public BlogController(BlogService blogService) {
-        this.blogService = blogService;
-    }
 
     @GetMapping("posts")
     public ResponseEntity<List<BlogResponse>> getAllBlog(@RequestParam(required = false) String tag) {

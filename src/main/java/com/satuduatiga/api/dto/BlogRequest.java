@@ -1,6 +1,6 @@
 package com.satuduatiga.api.dto;
 
-import java.util.List;
+import java.util.Set;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -25,6 +25,6 @@ public class BlogRequest {
     private String category;
 
     @NotEmpty(message = "tags must not be blank")
-    private List<@NotBlank(message = "tag must not be blank") String> tags;
+    private Set<@NotBlank(message = "tag must not be blank") String> tags;
 
 }
