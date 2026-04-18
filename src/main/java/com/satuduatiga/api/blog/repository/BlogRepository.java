@@ -1,4 +1,4 @@
-package com.satuduatiga.api.repository;
+package com.satuduatiga.api.blog.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,16 +6,16 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.satuduatiga.api.entity.Blog;
+import com.satuduatiga.api.blog.entity.BlogEntity;
 
-public interface BlogRepository extends JpaRepository<Blog, Long> {
+public interface BlogRepository extends JpaRepository<BlogEntity, Long> {
     @Override
     @EntityGraph(attributePaths = { "tags" })
-    Optional<Blog> findById(Long id);
+    Optional<BlogEntity> findById(Long id);
 
     @EntityGraph(attributePaths = { "tags" })
-    List<Blog> findAllByOrderByIdAsc();
+    List<BlogEntity> findAllByOrderByIdAsc();
 
     @EntityGraph(attributePaths = { "tags" })
-    List<Blog> findByTagsContaining(String tag);
+    List<BlogEntity> findByTagsContaining(String tag);
 }

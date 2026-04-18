@@ -1,4 +1,4 @@
-package com.satuduatiga.api.dto;
+package com.satuduatiga.api.blog.dto;
 
 import java.util.Set;
 

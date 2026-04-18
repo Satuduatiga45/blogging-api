@@ -1,10 +1,10 @@
-package com.satuduatiga.api.mapper;
+package com.satuduatiga.api.blog.mapper;
 
-import com.satuduatiga.api.dto.BlogResponse;
-import com.satuduatiga.api.entity.Blog;
+import com.satuduatiga.api.blog.dto.BlogResponse;
+import com.satuduatiga.api.blog.entity.BlogEntity;
 
 public class BlogMapper {
-    public static BlogResponse mapToBlogResponse(Blog blog) {
+    public static BlogResponse mapToBlogResponse(BlogEntity blog) {
         BlogResponse blogResponse = BlogResponse.builder()
                 .id(blog.getId())
                 .title(blog.getTitle())

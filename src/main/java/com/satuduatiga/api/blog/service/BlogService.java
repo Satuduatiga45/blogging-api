@@ -1,9 +1,9 @@
-package com.satuduatiga.api.service;
+package com.satuduatiga.api.blog.service;
 
 import java.util.List;
 
-import com.satuduatiga.api.dto.BlogRequest;
-import com.satuduatiga.api.dto.BlogResponse;
+import com.satuduatiga.api.blog.dto.BlogRequest;
+import com.satuduatiga.api.blog.dto.BlogResponse;
 
 public interface BlogService {
 

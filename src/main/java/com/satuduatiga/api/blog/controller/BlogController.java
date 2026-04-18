@@ -1,4 +1,4 @@
-package com.satuduatiga.api.controller;
+package com.satuduatiga.api.blog.controller;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.satuduatiga.api.dto.BlogRequest;
-import com.satuduatiga.api.dto.BlogResponse;
-import com.satuduatiga.api.service.BlogService;
+import com.satuduatiga.api.blog.dto.BlogRequest;
+import com.satuduatiga.api.blog.dto.BlogResponse;
+import com.satuduatiga.api.blog.service.BlogService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

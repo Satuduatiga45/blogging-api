@@ -1,4 +1,4 @@
-package com.satuduatiga.api.response;
+package com.satuduatiga.api.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

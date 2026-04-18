@@ -1,4 +1,4 @@
-package com.satuduatiga.api.entity;
+package com.satuduatiga.api.blog.entity;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -29,7 +29,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "blogs")
-public class Blog {
+public class BlogEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
