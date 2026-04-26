@@ -38,7 +38,7 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private Set<UserRoleEntity> userRoles = new HashSet<>();
+    private Set<UserRoleEntity> roles = new HashSet<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;

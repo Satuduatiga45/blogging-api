@@ -1,4 +1,4 @@
-package com.satuduatiga.api.security.config;
+package com.satuduatiga.api.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
