@@ -11,7 +11,7 @@ import com.satuduatiga.api.blog.dto.BlogResponse;
 import com.satuduatiga.api.blog.entity.BlogEntity;
 import static com.satuduatiga.api.blog.mapper.BlogMapper.mapToBlogResponse;
 import com.satuduatiga.api.blog.repository.BlogRepository;
-import com.satuduatiga.api.exception.BlogNotFoundException;
+import com.satuduatiga.api.exception.ResourceNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +30,7 @@ public class BlogService {
     @Transactional(readOnly = true)
     public BlogResponse getBlogById(Long blogId) {
         BlogEntity blog = blogRepository.findById(blogId)
-                .orElseThrow(() -> new BlogNotFoundException("Blog could not be found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Blog could not be found"));
         return mapToBlogResponse(blog);
     }
 
@@ -49,7 +49,7 @@ public class BlogService {
     @Transactional
     public BlogResponse updateBlog(Long blogId, BlogRequest blogRequest) {
         BlogEntity blog = blogRepository.findById(blogId)
-                .orElseThrow(() -> new BlogNotFoundException("Update failed. Blog could not be found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Update failed. Blog could not be found"));
         blog.setTitle(blogRequest.getTitle());
         blog.setContent(blogRequest.getContent());
         blog.setCategory(blogRequest.getCategory());
@@ -62,7 +62,7 @@ public class BlogService {
     @Transactional
     public void deleteBlog(Long blogId) {
         BlogEntity blog = blogRepository.findById(blogId)
-                .orElseThrow(() -> new BlogNotFoundException("Delete failed. Blog could not be found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Delete failed. Blog could not be found"));
         blogRepository.delete(blog);
     }
 

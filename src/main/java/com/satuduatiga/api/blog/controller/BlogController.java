@@ -55,7 +55,7 @@ public class BlogController {
 
     @DeleteMapping("posts/{blogId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBlog(@PathVariable("blogId") Long blogId) {
+    public void deleteBlog(@PathVariable() Long blogId) {
         blogService.deleteBlog(blogId);
     }
 

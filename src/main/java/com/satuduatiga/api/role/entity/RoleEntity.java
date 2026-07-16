@@ -24,6 +24,6 @@ public class RoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String name; // ROLE_USER ROLE_ADMIN
+    private String name; // ROLE_USER, ROLE_ADMIN
 
 }
