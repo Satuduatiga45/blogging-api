@@ -45,4 +45,12 @@ public class UserEntity {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public void addRole(RoleEntity role) {
+        UserRoleEntity userRole = new UserRoleEntity();
+        userRole.setUser(this);
+        userRole.setRole(role);
+
+        this.roles.add(userRole);
+    }
 }

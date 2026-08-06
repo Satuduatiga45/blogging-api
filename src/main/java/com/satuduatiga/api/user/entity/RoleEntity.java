@@ -1,4 +1,4 @@
-package com.satuduatiga.api.role.entity;
+package com.satuduatiga.api.user.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -17,7 +17,9 @@ import com.satuduatiga.api.exception.UnauthorizedException;
 import com.satuduatiga.api.security.CustomUserDetails;
 import com.satuduatiga.api.security.JwtService;
 import com.satuduatiga.api.user.dto.UserResponse;
+import com.satuduatiga.api.user.entity.RoleEntity;
 import com.satuduatiga.api.user.entity.UserEntity;
+import com.satuduatiga.api.user.repository.RoleRepository;
 import com.satuduatiga.api.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
@@ -43,6 +46,11 @@ public class AuthService {
         user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+
+        RoleEntity role = roleRepository.findByName("ROLE_USER")
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
+
+        user.addRole(role);
 
         userRepository.save(user);
 
