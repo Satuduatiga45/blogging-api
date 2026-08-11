@@ -22,7 +22,7 @@ public class BlogService {
     private final BlogRepository blogRepository;
 
     @Transactional(readOnly = true)
-    public List<BlogResponse> getAllBlog() {
+    public List<BlogResponse> getAllBlogs() {
         List<BlogEntity> blogs = blogRepository.findAllByOrderByIdAsc();
         return blogs.stream().map(blog -> mapToBlogResponse(blog)).collect(Collectors.toList());
     }
@@ -67,7 +67,7 @@ public class BlogService {
     }
 
     @Transactional
-    public List<BlogResponse> getAllBlogByTag(String tag) {
+    public List<BlogResponse> getAllBlogsByTag(String tag) {
         List<BlogEntity> blogs = blogRepository.findByTagsContaining(tag);
         return blogs.stream().map(blog -> mapToBlogResponse(blog)).collect(Collectors.toList());
     }

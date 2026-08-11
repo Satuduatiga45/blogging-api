@@ -50,7 +50,7 @@ public class JwtService {
     }
 
     public String extractSubject(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractClaim(token, claim -> claim.getSubject());
     }
 
     public Authentication getAuthentication(String token, CustomUserDetails userDetails) {
@@ -58,7 +58,7 @@ public class JwtService {
     }
 
     public boolean isTokenExpired(String token) {
-        return extractClaim(token, Claims::getExpiration).before(new Date());
+        return extractClaim(token, claim -> claim.getExpiration()).before(new Date());
     }
 
     public boolean isTokenValid(String token, CustomUserDetails userDetails) {

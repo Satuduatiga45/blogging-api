@@ -45,13 +45,15 @@ public class DatabaseSeeder implements CommandLineRunner {
                         RoleEntity.builder().name("ROLE_ADMIN").build()));
 
         // add admin
-        UserEntity admin = new UserEntity();
-        admin.setUsername(adminUsername);
-        admin.setEmail(adminEmail);
-        admin.setPassword(passwordEncoder.encode(adminPassword));
-        admin.addRole(adminRole);
+        if (!userRepository.existsByUsername(adminUsername)) {
+            UserEntity admin = new UserEntity();
+            admin.setUsername(adminUsername);
+            admin.setEmail(adminEmail);
+            admin.setPassword(passwordEncoder.encode(adminPassword));
+            admin.addRole(adminRole);
 
-        userRepository.save(admin);
+            userRepository.save(admin);
+        }
 
     }
 

@@ -30,11 +30,11 @@ public class BlogController {
     private final BlogService blogService;
 
     @GetMapping("posts")
-    public ResponseEntity<List<BlogResponse>> getAllBlog(@RequestParam(required = false) String tag) {
+    public ResponseEntity<List<BlogResponse>> getAllBlogs(@RequestParam(required = false) String tag) {
         if (tag != null && !tag.isEmpty()) {
-            return ResponseEntity.ok(blogService.getAllBlogByTag(tag));
+            return ResponseEntity.ok(blogService.getAllBlogsByTag(tag));
         }
-        return ResponseEntity.ok(blogService.getAllBlog());
+        return ResponseEntity.ok(blogService.getAllBlogs());
     }
 
     @GetMapping("posts/{blogId}")
@@ -43,14 +43,14 @@ public class BlogController {
     }
 
     @PostMapping("posts")
-    public ResponseEntity<BlogResponse> createNewBlog(@Valid @RequestBody BlogRequest blogRequest) {
+    public ResponseEntity<BlogResponse> createBlog(@Valid @RequestBody BlogRequest blogRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(blogService.createBlog(blogRequest));
     }
 
     @PatchMapping("posts/{blogId}")
     public ResponseEntity<BlogResponse> updateBlog(@PathVariable Long blogId,
             @Valid @RequestBody BlogRequest blogRequest) {
-        return ResponseEntity.status(HttpStatus.OK).body(blogService.updateBlog(blogId, blogRequest));
+        return ResponseEntity.ok(blogService.updateBlog(blogId, blogRequest));
     }
 
     @DeleteMapping("posts/{blogId}")

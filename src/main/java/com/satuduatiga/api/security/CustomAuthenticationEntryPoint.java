@@ -19,7 +19,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write(
                 """
-                        {
+
                             "status": 401
                             "error": "Unauthorized"
                             "message": "Full authentication is required to access this resource"

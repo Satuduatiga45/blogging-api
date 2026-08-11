@@ -1,5 +1,6 @@
 package com.satuduatiga.api.user.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);
+
+    List<UserEntity> findAllByOrderByIdAsc();
 }
