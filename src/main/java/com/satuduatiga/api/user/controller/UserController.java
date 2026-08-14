@@ -23,13 +23,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("api/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("users")
+    @GetMapping("")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
@@ -52,7 +52,7 @@ public class UserController {
         SecurityContextHolder.clearContext();
     }
 
-    @DeleteMapping("users/{userId}")
+    @DeleteMapping("{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteUser(@PathVariable Long userId) {

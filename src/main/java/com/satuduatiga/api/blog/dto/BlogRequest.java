@@ -4,6 +4,7 @@ import java.util.Set;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,10 +22,7 @@ public class BlogRequest {
     @NotBlank(message = "content must not be blank")
     private String content;
 
-    @NotBlank(message = "category must not be blank")
-    private String category;
-
-    @NotEmpty(message = "tags must not be blank")
-    private Set<@NotBlank(message = "tag must not be blank") String> tags;
+    @NotEmpty(message = "topics must not be blank")
+    private Set<@Pattern(regexp = "^[a-zA-Z ]*$", message = "Special character and number are not allowed") @NotBlank(message = "topic must not be blank") String> topics;
 
 }

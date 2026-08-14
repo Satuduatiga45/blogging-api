@@ -28,7 +28,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private UserEntity getCurrentAuthenticatedUser() {
+    @Transactional
+    public UserEntity getCurrentAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ResourceNotFoundException("User is not logged in");
@@ -50,9 +51,7 @@ public class UserService {
 
     @Transactional
     public UserResponse getCurrentUser() {
-
         return mapToUserResponse(new CustomUserDetails(getCurrentAuthenticatedUser()));
-
     }
 
     @Transactional

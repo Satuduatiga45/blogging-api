@@ -9,14 +9,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.satuduatiga.api.user.entity.UserEntity;
 
-import jakarta.persistence.CollectionTable;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -38,15 +40,16 @@ public class BlogEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
-    private String content;
-    private String category;
 
-    @ElementCollection
-    @CollectionTable(name = "blog_tags", joinColumns = @JoinColumn(name = "blog_id"))
-    @Column(name = "tag")
+    @Column(nullable = false)
+    private String content;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "blog_topics", joinColumns = @JoinColumn(name = "blog_id"), inverseJoinColumns = @JoinColumn(name = "topic_id"))
     @Builder.Default
-    private Set<String> tags = new HashSet<>();
+    private Set<TopicEntity> topics = new HashSet<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;

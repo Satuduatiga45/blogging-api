@@ -19,8 +19,7 @@ public class BlogResponse {
     private Long id;
     private String title;
     private String content;
-    private String category;
-    private Set<String> tags;
+    private Set<String> topics;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
