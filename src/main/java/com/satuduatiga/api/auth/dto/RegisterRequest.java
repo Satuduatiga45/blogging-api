@@ -3,6 +3,7 @@ package com.satuduatiga.api.auth.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import lombok.Setter;
 public class RegisterRequest {
 
     @NotBlank(message = "username must not be blank")
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "special characters are not allowed")
     private String username;
 
     @NotBlank(message = "email must not be blank")

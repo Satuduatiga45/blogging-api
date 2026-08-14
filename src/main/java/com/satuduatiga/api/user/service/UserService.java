@@ -11,13 +11,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.satuduatiga.api.exception.AlreadyExistsException;
+import com.satuduatiga.api.exception.ForbiddenActionException;
 import com.satuduatiga.api.exception.ResourceNotFoundException;
+import com.satuduatiga.api.exception.UnauthorizedException;
 import com.satuduatiga.api.security.CustomUserDetails;
 import com.satuduatiga.api.user.dto.UserRequest;
 import com.satuduatiga.api.user.dto.UserResponse;
 import com.satuduatiga.api.user.entity.UserEntity;
 import static com.satuduatiga.api.user.mapper.UserMapper.mapToUserResponse;
 import com.satuduatiga.api.user.repository.UserRepository;
+import com.satuduatiga.api.user.repository.UserRoleRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -85,6 +89,9 @@ public class UserService {
     public void deleteUser(Long id) {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User could not be found"));
+        if (userRoleRepository.existsByUserIdAndRoleName(id, "ROLE_ADMIN")) {
+            throw new ForbiddenActionException("You can not delete admin");
+        }
         userRepository.delete(user);
     }
 
