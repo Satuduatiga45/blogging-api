@@ -23,7 +23,6 @@ import com.satuduatiga.api.blog.repository.TopicRepository;
 import com.satuduatiga.api.blog.repository.specification.BlogSpecification;
 import com.satuduatiga.api.common.exception.ResourceNotFoundException;
 import com.satuduatiga.api.common.exception.UnauthorizedException;
-import com.satuduatiga.api.user.dto.UserResponse;
 import com.satuduatiga.api.user.entity.UserEntity;
 import com.satuduatiga.api.user.repository.UserRepository;
 import com.satuduatiga.api.user.service.UserService;
