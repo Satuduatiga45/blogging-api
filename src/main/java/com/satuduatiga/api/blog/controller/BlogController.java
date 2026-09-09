@@ -56,10 +56,8 @@ public class BlogController {
             formattedTopic = topic.replace("-", " ");
         }
 
-        Page<BlogEntity> blogPage = blogService.getAllBlogs(formattedTopic, page, size, sortBy, sortDir);
-        List<BlogResponse> blogDto = blogPage.getContent().stream().map(blog -> mapToBlogResponse(blog))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(mapToPagedResponse(blogDto, page, size, blogPage.getTotalElements(),
+        Page<BlogResponse> blogPage = blogService.getAllBlogs(formattedTopic, page, size, sortBy, sortDir);
+        return ResponseEntity.ok(mapToPagedResponse(blogPage.getContent(), page, size, blogPage.getTotalElements(),
                 blogPage.getTotalPages(), blogPage.isLast()));
     }
 
@@ -70,11 +68,8 @@ public class BlogController {
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "desc") String sortDir) {
 
-        Page<BlogEntity> blogPage = blogService.getAllBlogs(null, page, size, sortBy, sortDir);
-        List<BlogResponse> blogDto = blogPage.getContent().stream().map(blog -> mapToBlogResponse(blog))
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(mapToPagedResponse(blogDto, page, size, blogPage.getTotalElements(),
+        Page<BlogResponse> blogPage = blogService.getAllBlogs(null, page, size, sortBy, sortDir);
+        return ResponseEntity.ok(mapToPagedResponse(blogPage.getContent(), page, size, blogPage.getTotalElements(),
                 blogPage.getTotalPages(), blogPage.isLast()));
     }
 
@@ -86,12 +81,11 @@ public class BlogController {
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "desc") String sortDir) {
 
-        Page<BlogEntity> blogPage = blogService.getAllBlogByUser(username, page, size, sortBy, sortDir);
-        List<BlogResponse> blogDto = blogPage.getContent().stream().map(blog -> mapToBlogResponse(blog))
-                .collect(Collectors.toList());
+        Page<BlogResponse> blogPage = blogService.getAllBlogsByUser(username, page, size, sortBy, sortDir);
 
-        return ResponseEntity.ok(mapToPagedResponse(blogDto, page, size, blogPage.getTotalElements(),
+        return ResponseEntity.ok(mapToPagedResponse(blogPage.getContent(), page, size, blogPage.getTotalElements(),
                 blogPage.getTotalPages(), blogPage.isLast()));
+
     }
 
     @GetMapping("id/{blogId}")

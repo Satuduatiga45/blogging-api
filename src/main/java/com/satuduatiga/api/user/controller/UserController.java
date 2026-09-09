@@ -45,11 +45,10 @@ public class UserController {
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
 
-        Page<UserEntity> userPage = userService.getAllUsers(page, size, sortBy, sortDir);
-        List<UserResponse> userDto = userPage.getContent().stream()
-                .map(user -> mapToUserResponse(new CustomUserDetails(user))).collect(Collectors.toList());
+        Page<UserResponse> userPage = userService.getAllUsers(page, size, sortBy, sortDir);
         return ResponseEntity
-                .ok(mapToPagedResponse(userDto, page, size, userPage.getTotalElements(), userPage.getTotalPages(),
+                .ok(mapToPagedResponse(userPage.getContent(), page, size, userPage.getTotalElements(),
+                        userPage.getTotalPages(),
                         userPage.isLast()));
 
     }

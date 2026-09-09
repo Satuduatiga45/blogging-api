@@ -47,13 +47,13 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Page<UserEntity> getAllUsers(int page, int size, String sortBy, String sortDir) {
+    public Page<UserResponse> getAllUsers(int page, int size, String sortBy, String sortDir) {
 
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        return userRepository.findAll(pageable);
+        return userRepository.findAll(pageable).map(user -> mapToUserResponse(new CustomUserDetails(user)));
     }
 
     @Transactional

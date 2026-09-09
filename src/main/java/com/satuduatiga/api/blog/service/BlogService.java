@@ -44,7 +44,7 @@ public class BlogService {
     }
 
     @Transactional(readOnly = true)
-    public Page<BlogEntity> getAllBlogs(String topic, int page, int size, String sortBy, String sortDir) {
+    public Page<BlogResponse> getAllBlogs(String topic, int page, int size, String sortBy, String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
@@ -57,19 +57,19 @@ public class BlogService {
             blogs = blogRepository.findAll(pageable);
         }
 
-        return blogs;
+        return blogs.map(blog -> mapToBlogResponse(blog));
     }
 
     @Transactional(readOnly = true)
-    public Page<BlogEntity> getAllBlogByUser(String username, int page, int size, String sortBy, String sortDir) {
+    public Page<BlogResponse> getAllBlogsByUser(String username, int page, int size, String sortBy, String sortDir) {
         if (!userRepository.existsByUsername(username)) {
             throw new ResourceNotFoundException("User not found");
         }
-
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        return blogRepository.findByUserUsername(username, pageable);
+
+        return blogRepository.findByUserUsername(username, pageable).map(blog -> mapToBlogResponse(blog));
     }
 
     @Transactional(readOnly = true)
