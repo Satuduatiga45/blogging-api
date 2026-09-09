@@ -1,8 +1,9 @@
 package com.satuduatiga.api.blog.repository;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,13 +18,13 @@ public interface BlogRepository extends JpaRepository<BlogEntity, Long>, JpaSpec
 
     @Override
     @EntityGraph(attributePaths = "topics")
-    List<BlogEntity> findAll(Specification<BlogEntity> spec);
+    Page<BlogEntity> findAll(Specification<BlogEntity> spec, Pageable pageable);
 
     @Override
     @EntityGraph(attributePaths = "topics")
-    List<BlogEntity> findAll();
+    Page<BlogEntity> findAll(Pageable pageable);
 
     @EntityGraph(attributePaths = "topics")
-    List<BlogEntity> findByUserUsername(String username);
+    Page<BlogEntity> findByUserUsername(String username, Pageable pageable);
 
 }

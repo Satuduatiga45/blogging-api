@@ -1,8 +1,9 @@
 package com.satuduatiga.api.user.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,10 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.satuduatiga.api.exception.AlreadyExistsException;
-import com.satuduatiga.api.exception.ForbiddenActionException;
-import com.satuduatiga.api.exception.ResourceNotFoundException;
-import com.satuduatiga.api.exception.UnauthorizedException;
+import com.satuduatiga.api.common.exception.AlreadyExistsException;
+import com.satuduatiga.api.common.exception.ForbiddenActionException;
+import com.satuduatiga.api.common.exception.ResourceNotFoundException;
 import com.satuduatiga.api.security.CustomUserDetails;
 import com.satuduatiga.api.user.dto.UserRequest;
 import com.satuduatiga.api.user.dto.UserResponse;
@@ -46,11 +46,14 @@ public class UserService {
         return user;
     }
 
-    @Transactional
-    public List<UserResponse> getAllUsers() {
-        List<CustomUserDetails> userDetails = userRepository.findAllByOrderByIdAsc().stream()
-                .map(user -> new CustomUserDetails(user)).collect(Collectors.toList());
-        return userDetails.stream().map(user -> mapToUserResponse(user)).toList();
+    @Transactional(readOnly = true)
+    public Page<UserEntity> getAllUsers(int page, int size, String sortBy, String sortDir) {
+
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return userRepository.findAll(pageable);
     }
 
     @Transactional

@@ -1,4 +1,4 @@
-package com.satuduatiga.api.exception;
+package com.satuduatiga.api.common.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
 
