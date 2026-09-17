@@ -1,7 +1,6 @@
 package com.satuduatiga.api.blog.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -21,11 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.satuduatiga.api.blog.dto.BlogRequest;
 import com.satuduatiga.api.blog.dto.BlogResponse;
 import com.satuduatiga.api.blog.dto.TopicResponse;
-import com.satuduatiga.api.blog.entity.BlogEntity;
 import com.satuduatiga.api.blog.service.BlogService;
 import com.satuduatiga.api.common.dto.PagedResponse;
-
-import static com.satuduatiga.api.blog.mapper.BlogMapper.mapToBlogResponse;
 import static com.satuduatiga.api.common.mapper.PageMapper.mapToPagedResponse;
 
 import jakarta.validation.Valid;

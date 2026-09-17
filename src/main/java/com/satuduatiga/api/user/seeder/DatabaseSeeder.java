@@ -36,7 +36,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         // add ROLE_USER and ROLE_ADMIN to roles database
-        RoleEntity userRole = roleRepository.findByName("ROLE_USER")
+        roleRepository.findByName("ROLE_USER")
                 .orElseGet(() -> roleRepository.save(
                         RoleEntity.builder().name("ROLE_USER").build()));
 

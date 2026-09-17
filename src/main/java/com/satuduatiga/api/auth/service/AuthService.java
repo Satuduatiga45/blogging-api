@@ -1,6 +1,7 @@
 package com.satuduatiga.api.auth.service;
 
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,19 +64,23 @@ public class AuthService {
 
     }
 
-    @Transactional
     public AuthResponse login(LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getIdentifier(),
-                        loginRequest.getPassword()));
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getIdentifier(),
+                            loginRequest.getPassword()));
 
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        String accessToken = jwtService.generateToken(userDetails);
-        String refreshToken = jwtService.generateRefreshToken(userDetails);
+            String accessToken = jwtService.generateToken(userDetails);
+            String refreshToken = jwtService.generateRefreshToken(userDetails);
 
-        return jwtAuthResponse(userDetails, accessToken, refreshToken);
+            return jwtAuthResponse(userDetails, accessToken, refreshToken);
+
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException("Bad Credentials");
+        }
 
     }
 
@@ -84,7 +89,7 @@ public class AuthService {
         String refreshToken = refreshTokenRequest.getRefreshToken();
         String subject = jwtService.extractSubject(refreshToken);
 
-        UserEntity user = (UserEntity) userRepository.findByUsernameOrEmail(subject, subject)
+        UserEntity user = userRepository.findByUsernameOrEmail(subject, subject)
                 .orElseThrow(() -> new ResourceNotFoundException("Username or email cannot be found"));
 
         CustomUserDetails userDetails = new CustomUserDetails(user);
