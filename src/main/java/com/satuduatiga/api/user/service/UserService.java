@@ -67,7 +67,7 @@ public class UserService {
 
         if (userRequest.getUsername() != null && !userRequest.getUsername().isBlank()) {
             if (user.getUsername().equals(userRequest.getUsername())
-                    && userRepository.existsByUsername(userRequest.getUsername())) {
+                    || userRepository.existsByUsername(userRequest.getUsername())) {
                 throw new AlreadyExistsException("Username is already taken");
             }
             user.setUsername(userRequest.getUsername());
