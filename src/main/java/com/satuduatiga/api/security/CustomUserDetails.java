@@ -1,5 +1,6 @@
 package com.satuduatiga.api.security;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,6 +18,8 @@ public class CustomUserDetails implements UserDetails {
     private final String username;
     private final String email;
     private final String password;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(UserEntity user) {
@@ -24,6 +27,8 @@ public class CustomUserDetails implements UserDetails {
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.password = user.getPassword();
+        this.createdAt = user.getCreatedAt();
+        this.updatedAt = user.getUpdatedAt();
         this.authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
                 .collect(Collectors.toList());
@@ -54,5 +59,13 @@ public class CustomUserDetails implements UserDetails {
 
     public Set<String> getRoles() {
         return authorities.stream().map(authority -> authority.getAuthority()).collect(Collectors.toSet());
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }
