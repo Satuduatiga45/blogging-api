@@ -1,0 +1,53 @@
+CREATE TABLE users(
+	id BIGSERIAL PRIMARY KEY,
+	username VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	password VARCHAR(255) NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+
+	CONSTRAINT uq_users_username UNIQUE (username),
+	CONSTRAINT uq_users_email UNIQUE (email)
+);
+
+CREATE TABLE roles(
+	id BIGSERIAL PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+
+	CONSTRAINT uq_roles_name UNIQUE (name)
+);
+
+CREATE TABLE topics(
+	id BIGSERIAL PRIMARY KEY,
+	name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE user_roles(
+	id BIGSERIAL PRIMARY KEY,
+	user_id BIGINT NOT NULL,
+	role_id BIGINT NOT NULL,
+
+	CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id),
+	CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES roles(id),
+	CONSTRAINT uq_user_roles UNIQUE (user_id, role_id)
+);
+
+CREATE TABLE blogs(
+	id BIGSERIAL PRIMARY KEY,
+	title VARCHAR(255) NOT NULL,
+	content TEXT NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+	user_id BIGINT NOT NULL,
+
+	CONSTRAINT fk_blogs_user FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE blog_topics(
+	blog_id BIGINT NOT NULL,
+	topic_id BIGINT NOT NULL,
+
+	CONSTRAINT fk_blog FOREIGN KEY (blog_id) REFERENCES blogs(id),
+	CONSTRAINT fk_topic FOREIGN KEY (topic_id) REFERENCES topics(id),
+	CONSTRAINT pk_blog_topics PRIMARY KEY(blog_id, topic_id)
+);

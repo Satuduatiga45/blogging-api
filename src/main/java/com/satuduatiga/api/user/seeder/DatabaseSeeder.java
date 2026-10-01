@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.satuduatiga.api.common.exception.ResourceNotFoundException;
 import com.satuduatiga.api.user.entity.RoleEntity;
 import com.satuduatiga.api.user.entity.UserEntity;
 import com.satuduatiga.api.user.repository.RoleRepository;
@@ -35,17 +36,12 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
 
-        // add ROLE_USER and ROLE_ADMIN to roles database
-        roleRepository.findByName("ROLE_USER")
-                .orElseGet(() -> roleRepository.save(
-                        RoleEntity.builder().name("ROLE_USER").build()));
-
-        RoleEntity adminRole = roleRepository.findByName("ROLE_ADMIN")
-                .orElseGet(() -> roleRepository.save(
-                        RoleEntity.builder().name("ROLE_ADMIN").build()));
-
         // add admin
         if (!userRepository.existsByUsername(adminUsername)) {
+
+            RoleEntity adminRole = roleRepository.findByName("ROLE_ADMIN")
+                    .orElseThrow(() -> new ResourceNotFoundException("ROLE_ADMIN not yet created"));
+
             UserEntity admin = new UserEntity();
             admin.setUsername(adminUsername);
             admin.setEmail(adminEmail);
