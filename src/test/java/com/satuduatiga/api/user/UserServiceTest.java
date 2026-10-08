@@ -153,10 +153,11 @@ public class UserServiceTest {
         Sort sort = Sort.by("id").ascending();
 
         List<UserEntity> userList = List.of(user1, user2);
-        Page<UserEntity> pagedUser = new PageImpl<>(userList, PageRequest.of(1, 2, sort), 2);
+        Pageable pageable = PageRequest.of(1, 2, sort);
+        Page<UserEntity> pagedUser = new PageImpl<>(userList, pageable, 2);
         Page<UserResponse> userDto = pagedUser.map(user -> UserMapper.mapToUserResponse(new CustomUserDetails(user)));
 
-        when(userRepository.findAll(any(Pageable.class))).thenReturn(pagedUser);
+        when(userRepository.findAll(eq(pageable))).thenReturn(pagedUser);
 
         Page<UserResponse> userTest = userService.getAllUsers(1, 2, "id", "asc");
 
@@ -179,10 +180,11 @@ public class UserServiceTest {
         Sort sort = Sort.by("id").descending();
 
         List<UserEntity> userList = List.of(user1, user2);
-        Page<UserEntity> pagedUser = new PageImpl<>(userList, PageRequest.of(1, 2, sort), 2);
+        Pageable pageable = PageRequest.of(1, 2, sort);
+        Page<UserEntity> pagedUser = new PageImpl<>(userList, pageable, 2);
         Page<UserResponse> userDto = pagedUser.map(user -> UserMapper.mapToUserResponse(new CustomUserDetails(user)));
 
-        when(userRepository.findAll(any(Pageable.class))).thenReturn(pagedUser);
+        when(userRepository.findAll(eq(pageable))).thenReturn(pagedUser);
 
         Page<UserResponse> userTest = userService.getAllUsers(1, 2, "id", "desc");
 

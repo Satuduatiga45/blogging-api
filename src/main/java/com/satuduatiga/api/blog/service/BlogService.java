@@ -121,10 +121,10 @@ public class BlogService {
     public void deleteBlog(Long blogId) {
         UserEntity user = userService.getCurrentAuthenticatedUser();
         BlogEntity blog = blogRepository.findById(blogId)
-                .orElseThrow(() -> new ResourceNotFoundException("Update failed. Blog could not be found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Delete failed. Blog could not be found"));
 
         if (!blog.getUser().getId().equals(user.getId())) {
-            throw new UnauthorizedException("You do not have permission to edit this blog");
+            throw new UnauthorizedException("You do not have permission to delete this blog");
         }
 
         blogRepository.delete(blog);
